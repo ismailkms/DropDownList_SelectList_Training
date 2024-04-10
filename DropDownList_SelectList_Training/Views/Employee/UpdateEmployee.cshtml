@@ -1,0 +1,31 @@
+﻿@model EntityLayer.Concrete.Employee
+@{
+    Layout = "_Layout";
+}
+
+<h1>Çalışan Düzenle</h1>
+<br />
+@if (ViewBag.Exception != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Exception
+    </div>
+    <br />
+}
+@using (Html.BeginForm("UpdateEmployee", "Employee", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.Label("Ad")
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required="required" })
+    <br />
+    @Html.Label("Soyad")
+    @Html.TextBoxFor(x => x.SurName, new { @class = "form-control", @required="required" })
+    <br />
+    @Html.Label("Departman")
+    @Html.DropDownListFor(x => x.DepartmentId,(List<SelectListItem>)ViewBag.Departments,"Bir departman seçiniz", new { @class = "form-control", @required="required" })
+    @* Alternatifler *@
+    @* @Html.DropDownListFor(x => x.DepartmentId,(List<SelectListItem>)ViewBag.Departments, new { @class = "form-control" }) *@
+    @* @Html.DropDownList("Departments",null,"Bir departman seçiniz",new {@class="form-control"}) *@
+    <br />
+    <button class="btn btn-info">Düzenle</button>
+}

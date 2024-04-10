@@ -1,0 +1,28 @@
+﻿@model EntityLayer.Concrete.City
+@{
+    Layout = "_Layout";
+}
+
+<h1>Şehir Düzenle</h1>
+<br />
+@if (ViewBag.Exception != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Exception
+    </div>
+    <br />
+}
+@using (Html.BeginForm("UpdateCity", "City", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.Label("Şehir")
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required="required" })
+    <br />
+    @Html.Label("Ülke")
+    @Html.DropDownListFor(x => x.CountryId,(List<SelectListItem>)ViewBag.Countries,"Bir ülke seçiniz", new { @class = "form-control", @required="required" })
+    @* Alternatifler *@
+    @* @Html.DropDownListFor(x => x.DepartmentId,(List<SelectListItem>)ViewBag.Departments, new { @class = "form-control" }) *@
+    @* @Html.DropDownList("Departments",null,"Bir departman seçiniz",new {@class="form-control"}) *@
+    <br />
+    <button class="btn btn-info">Düzenle</button>
+}

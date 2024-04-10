@@ -1,0 +1,66 @@
+﻿@model EntityLayer.Concrete.Person
+@{
+    Layout = "_Layout";
+}
+
+<h1>Kişi Düzenle</h1>
+<br />
+@if (ViewBag.Exception != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Exception
+    </div>
+    <br />
+}
+@using (Html.BeginForm("UpdatePerson", "Person", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.Label("Ad")
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required="required" })
+    <br />
+    @Html.Label("Soyad")
+    @Html.TextBoxFor(x => x.SurName, new { @class = "form-control", @required="required" })
+    <br />
+    @Html.Label("Ülke")
+
+    <select id="countrylist" asp-for="CountryId" asp-items="ViewBag.Countries" class="form-control" required="required">
+        <option value="">Ülke seçiniz</option>
+    </select>
+    <br />
+    @Html.Label("Şehir")
+    <select id="citylist" asp-for="CityId" class="form-control" required="required">
+    </select>
+    <br />
+    //asp-for="" normal bir inputta name="" denk geldiğinden dolayı yukarıda entity içerisinde tanımlaığımız prop'ların ismini asp-for="" içerisinde yazdık
+    //İlk değerlerde required'ı etkinleştirebilmek için value="" değerini boş bıraktık
+    //Alt tarafta script ile seçilen ülkeye göre şehir getiriyoruz
+
+    <button class="btn btn-info">Düzenle</button>
+}
+@section Scripts {
+    <script>
+        $(function () {
+            $("#countrylist").change(function () {
+                $("#citylist").empty();
+                //Citylist'i boşalttık
+                $.ajax({
+                    url: "/Person/selectListCity",
+                    dataType: "json",
+                    data: { id: $("#countrylist").val() },
+                    success: function (data) {
+                        if (data != null) {
+                            $("#citylist").append("<option value=''> Şehir seçiniz </option>");
+
+                            $.each(data, (index, item) => {
+                                $("#citylist").append(`<option value="${item.value}"> ${item.text} </option>`);
+                            });
+                        }
+                        else {
+                            alert("Şehirler çekilirken bir hatayla karşılaşıldı!!!");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

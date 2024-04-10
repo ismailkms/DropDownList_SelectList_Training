@@ -1,0 +1,34 @@
+﻿@using EntityLayer.Concrete
+@model List<Employee>
+
+@{
+    Layout = "_Layout";
+}
+
+<h1>Çalışan Listesi</h1>
+<br />
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Ad</th>
+            <th scope="col">Soyad</th>
+            <th scope="col">Departman</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.SurName</td>
+                <td>@item.Department.Name</td>
+                <td>
+                    <a href="/Employee/DeleteEmployee/@item.Id" onclick="return confirm('Dosyayı silmek istediğinize emin misiniz?');" class="btn btn-danger">Sil</a>
+                    <a href="/Employee/UpdateEmployee/@item.Id" class="btn btn-success">Düzenle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Employee/AddEmployee" class="btn btn-info mt-3">Ekle</a>

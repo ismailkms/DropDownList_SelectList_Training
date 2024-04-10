@@ -1,0 +1,33 @@
+﻿
+@using EntityLayer.Concrete
+@model List<City>
+
+@{
+    Layout = "_Layout";
+}
+
+<h1>Şehir Listesi</h1>
+<br />
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Şehir</th>
+            <th scope="col">Ülke</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Country.Name</td>
+                <td>
+                    <a href="/City/DeleteCity/@item.Id" onclick="return confirm('Dosyayı silmek istediğinize emin misiniz?');" class="btn btn-danger">Sil</a>
+                    <a href="/City/UpdateCity/@item.Id" class="btn btn-success">Düzenle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/City/AddCity" class="btn btn-info mt-3">Ekle</a>

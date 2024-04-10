@@ -1,0 +1,16 @@
+﻿
+@model EntityLayer.Concrete.Department
+@{
+    Layout = "_Layout";
+}
+
+<h1>Yeni Departman Oluştur</h1>
+<br />
+@using (Html.BeginForm("UpdateDepartment", "Department", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.Label("Ad")
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required="required" })
+    <br />
+    <button class="btn btn-info">Düzenle</button>
+}
